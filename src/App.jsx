@@ -4,12 +4,12 @@ import "./App.css";
 const App = () => {
   const [title, setTitle] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  // const [lyrics, setLyrics] = useState(null);
+  const [lyrics, setLyrics] = useState(null);
 
   const getResults = () => {
     const queryParams = new URLSearchParams({ title });
 
-    const url = `https://genius-song-lyrics1.p.rapidapi.com/search/?q=${searchQuery}&${queryParams}&per_page=6&page=1`;
+    const url = `https://genius-song-lyrics1.p.rapidapi.com/search/?q=${searchQuery}&${queryParams}&${lyrics}&per_page=6&page=1`;
     const options = {
       method: "GET",
       headers: {
@@ -45,6 +45,7 @@ const App = () => {
         <input
           onChange={(e) => {
             setSearchQuery(e.target.value);
+            setLyrics(null);
           }}
           type="text"
           placeholder="Enter Artist"
@@ -71,7 +72,14 @@ const App = () => {
                     <div className="box-info">
                       <h3>{song.result.title}</h3>
                       <span>{song.result.artist_names}</span>
-                      <button className="btn">Get Lyrics &rarr;</button>
+                      <a
+                        href={`https://genius.com${song.result.path}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="btn"
+                      >
+                        Get Lyrics &rarr;
+                      </a>
                     </div>
                   </div>
                 </div>
